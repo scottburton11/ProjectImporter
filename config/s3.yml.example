@@ -1,0 +1,4 @@
+production:
+    aws_access_key: 
+    aws_secret_access_key: 
+    data_bucket_name: 

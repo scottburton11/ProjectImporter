@@ -3,3 +3,4 @@
 coverage
 rdoc
 pkg
+config/s3.yml
