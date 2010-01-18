@@ -6,7 +6,7 @@ module ProjectImporter
       @local_file = ProjectImporter::LocalFile.new(path)
       @account_prefix = account_prefix
       @home = home
-      @logger = ProjectImporter.logger
+      @logger = ProjectImporter::Logger
     end
 
     def self.move(dir, account_prefix, home)
@@ -33,7 +33,7 @@ module ProjectImporter
       # project.accessor.put(full_filename, {"Content-MD5" => md5_base64_encoded, "Content-Type" => content_type, "Content-Length" => size})
       # S3.store_object(:file => full_filename, :md5 => md5.to_s, :headers => {"Content-Type" => content_type, "Content-Length" => size})
       logger.info("Uploading #{local_file.file_name}, md5: #{local_file.md5.to_s}")
-      S3.instance.interface.store_object(:bucket => ProjectImporter.bucket, :key => full_name(local_file.file_name), :md5 => local_file.md5.to_s, :data => open(local_file.path), :headers => {"Content-Type" => local_file.content_type, "Content-Length" => local_file.size, "content-disposition" => "attachment; filename=#{local_file.file_name}"})
+      S3.instance.interface.store_object(:bucket => ProjectImporter::Bucket, :key => full_name(local_file.file_name), :md5 => local_file.md5.to_s, :data => open(local_file.path), :headers => {"Content-Type" => local_file.content_type, "Content-Length" => local_file.size, "content-disposition" => "attachment; filename=#{local_file.file_name}"})
       logger.info("#{local_file.file_name} moved to #{full_name(local_file.file_name)}")
     rescue => e
       logger.warn("Failed to copy #{local_file.file_name} - Error was #{e}")

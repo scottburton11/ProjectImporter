@@ -25,15 +25,7 @@ end
 
 module ProjectImporter
 
-  @@logger = Logger.new(STDOUT)
-  @@bucket = S3_CONFIG["data_bucket_name"]
-  
-  def self.bucket
-    @@bucket
-  end
-  
-  def self.logger
-    @@logger
-  end
+  Logger = Logger.new(STDOUT)
+  Bucket = S3_CONFIG["data_bucket_name"]
   
 end
